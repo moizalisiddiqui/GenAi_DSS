@@ -1,5 +1,3 @@
-<div align="center">
-
 # 🎭 Multi-Agent Narrative Simulation Engine
 
 ### *Autonomous Agents. Dynamic Actions. Hidden Mysteries.*
@@ -9,8 +7,6 @@
 [![Gemini](https://img.shields.io/badge/Google_Gemini-Powered-00ff41?style=for-the-badge&logo=google&logoColor=black)](https://ai.google.dev)
 
 **Team Midnight Sons** | Hackfest x IBA 2026
-
-</div>
 
 ---
 
@@ -24,11 +20,33 @@ UV package manager
 Google Gemini API key
 ```
 
+### Installing UV (if not already installed)
+
+**macOS/Linux:**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Windows:**
+```bash
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**Using pip:**
+```bash
+pip install uv
+```
+
+**Verify installation:**
+```bash
+uv --version
+```
+
 ### Installation & Setup
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/your-repo/GenAi_DSS.git
+git clone https://github.com/moizalisiddiqui/GenAi_DSS.git
 cd GenAi_DSS
 
 # 2. Install dependencies
@@ -104,29 +122,29 @@ Traditional chatbots only generate dialogue. Our system creates **coherent, acti
 GenAi_DSS/
 ├── 📂 examples/
 │   └── rickshaw_accident/
-│       ├── character_configs.json    # 4 character profiles
-│       └── seed_story.json           # Story seed (mandatory)
+│       ├── character_configs.json     # 4 character profiles
+│       └── seed_story.json            # Story seed (mandatory)
 │
 ├── 📂 src/
 │   ├── 📂 agents/
-│   │   ├── base_agent.py            # Abstract agent class
-│   │   ├── character_agent.py       # CoT reasoning agent
-│   │   └── director_agent.py        # Orchestrator agent
+│   │   ├── base_agent.py              # Abstract agent class
+│   │   ├── character_agent.py         # CoT reasoning agent
+│   │   └── director_agent.py          # Orchestrator agent
 │   │
 │   ├── 📂 graph/
-│   │   └── narrative_graph.py       # LangGraph state machine
+│   │   └── narrative_graph.py         # LangGraph state machine
 │   │
 │   ├── 📂 prompts/
-│   │   ├── character_prompts.py     # Character templates
-│   │   └── director_prompts.py      # Director templates
+│   │   ├── character_prompts.py       # Character templates
+│   │   └── director_prompts.py        # Director templates
 │   │
-│   ├── config.py                    # Configuration
-│   ├── schemas.py                   # Pydantic models
-│   ├── story_state.py               # State + entity registry
-│   └── main.py                      # Entry point
+│   ├── config.py                      # Configuration
+│   ├── schemas.py                     # Pydantic models
+│   ├── story_state.py                 # State + entity registry
+│   └── main.py                        # Entry point
 │
-├── 📄 story_output.json             # Generated narrative
-├── 📄 prompts_log.json              # LLM interaction logs
+├── 📄 story_output.json                # Generated narrative
+├── 📄 prompts_log.json                 # LLM interaction logs
 └── 📄 README.md
 ```
 
@@ -139,9 +157,9 @@ GenAi_DSS/
 ```python
 # Controls narrative flow through deterministic plot clock
 PHASES = {
-    "ESCALATION":  (1-5),    # Establish conflict
-    "COMPLEXITY":  (6-12),   # Mystery clues, negotiations  
-    "RESOLUTION":  (13+)     # Force conclusion
+    "ESCALATION": (1-5),      # Establish conflict
+    "COMPLEXITY": (6-12),     # Mystery clues, negotiations
+    "RESOLUTION": (13+)       # Force conclusion
 }
 ```
 
@@ -159,13 +177,13 @@ PHASES = {
 ┌─────────────────────────────────────┐
 │  1. Receive Goal                    │
 │     "Accuse Ahmed of stealing"      │
-│           ↓                          │
+│              ↓                       │
 │  2. Think (Chain-of-Thought)        │
 │     "Ahmed is too calm..."          │
-│           ↓                          │
+│              ↓                       │
 │  3. Decide Action                   │
 │     "none" or "points at briefcase" │
-│           ↓                          │
+│              ↓                       │
 │  4. Generate Dialogue                │
 │     "Open that briefcase, Ahmed!"   │
 └─────────────────────────────────────┘
@@ -219,9 +237,8 @@ PHASES = {
 if turn < 15 and action_count < 5:
     if consecutive_dialogue >= 2:
         FORCE_ACTION = True
-
-if consecutive_dialogue >= 3:
-    FORCE_ACTION = True
+    if consecutive_dialogue >= 3:
+        FORCE_ACTION = True
 ```
 
 **Action Handshaking:**
@@ -250,10 +267,10 @@ Turn #4:   Ahmed MUST acknowledge this action
 
 **Progressive Clues:**
 ```
-Turn 5:  Hint      → "Saleem pats pocket, goes pale"
-Turn 10: Evidence  → "Ahmed shifts briefcase suspiciously"
-Turn 15: Weapon    → "Uncle Jameel spots wallet corner"
-Turn 19: Reveal    → "Wallet tumbles from briefcase..."
+Turn 5:  Hint     → "Saleem pats pocket, goes pale"
+Turn 10: Evidence → "Ahmed shifts briefcase suspiciously"
+Turn 15: Weapon   → "Uncle Jameel spots wallet corner"
+Turn 19: Reveal   → "Wallet tumbles from briefcase..."
 ```
 
 ---
@@ -322,7 +339,6 @@ Complete LLM interaction history:
 ### Change LLM Model
 
 Edit `src/config.py`:
-
 ```python
 class StoryConfig:
     model_name: str = "gemini-2.0-flash-exp"
@@ -333,7 +349,6 @@ class StoryConfig:
 ### Customize Characters
 
 Edit `examples/rickshaw_accident/character_configs.json`:
-
 ```json
 {
   "characters": [
@@ -355,63 +370,26 @@ Edit `examples/rickshaw_accident/character_configs.json`:
 
 ## ✨ Key Features
 
-<table>
-<tr>
-<td width="50%">
-
-### 🎯 Entity-Ownership Registry
-
-**Problem:** Characters claim wrong items  
-**Solution:** Canonical registry  
-**Result:** Zero contradictions
-
-</td>
-<td width="50%">
-
-### 🧠 Chain-of-Thought
-
-**Problem:** Can't see agent reasoning  
-**Solution:** Visible `thought` field  
-**Result:** Complete transparency
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-### 🔁 Zero-Repetition Actions
-
-**Problem:** Same actions repeat  
-**Solution:** Global tracking  
-**Result:** 7+ unique actions
-
-</td>
-<td width="50%">
-
-### ⏰ Deterministic Pacing
-
-**Problem:** Stories meander  
-**Solution:** Plot clock  
-**Result:** Guaranteed resolution
-
-</td>
-</tr>
-</table>
+| Feature | Problem | Solution | Result |
+|---------|---------|----------|--------|
+| 🎯 **Entity-Ownership Registry** | Characters claim wrong items | Canonical registry | Zero contradictions |
+| 🧠 **Chain-of-Thought** | Can't see agent reasoning | Visible `thought` field | Complete transparency |
+| 🔁 **Zero-Repetition Actions** | Same actions repeat | Global tracking | 7+ unique actions |
+| ⏰ **Deterministic Pacing** | Stories meander | Plot clock | Guaranteed resolution |
 
 ---
 
 ## 📚 Technical Stack
 
 ```yaml
-Language:      Python 3.11+
-LLM Provider:  Google Gemini 2.0 Flash
-Framework:     LangGraph (LangChain)
-State:         Pydantic v2
-Package Mgr:   UV
-
-API Calls:     ~45 per simulation
-Cost:          ~$0.05 per run
-Execution:     3-5 minutes
+Language:     Python 3.11+
+LLM Provider: Google Gemini 2.0 Flash
+Framework:    LangGraph (LangChain)
+State:        Pydantic v2
+Package Mgr:  UV
+API Calls:    ~45 per simulation
+Cost:         ~$0.05 per run
+Execution:    3-5 minutes
 ```
 
 ---
@@ -454,23 +432,13 @@ cat prompts_log.json | jq .
 
 ## 👥 Team
 
-<div align="center">
-
 **🌙 Midnight Sons 🌙**
 
-Moiz Ali Siddiqui* • Syed Ayaan Nadeem • Talha Ahmed
+Moiz Ali Siddiqui • Syed Ayaan Nadeem • Talha Ahmed
 
-*Institute of Business Administration (IBA), Karachi*
+*Institute of Business & Management (IoBM), Karachi*
 
 **Hackfest x Datathon 2026**
-
-</div>
-
----
-
-## 📄 License
-
-MIT License - See LICENSE file for details
 
 ---
 
@@ -482,10 +450,6 @@ MIT License - See LICENSE file for details
 
 ---
 
-<div align="center">
-
 **For detailed technical documentation, see the included PDF report.**
 
 Made with 💚 by Midnight Sons
-
-</div>
